@@ -1,0 +1,32 @@
+{
+  "name": "kotibaai-backend",
+  "version": "1.0.0",
+  "description": "KotibaAI - O'zbek AI kotib backend",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0",
+    "@prisma/client": "^5.22.0",
+    "@seald-io/nedb": "^4.1.2",
+    "axios": "^1.7.9",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "exceljs": "^4.4.0",
+    "express": "^4.21.2",
+    "form-data": "^4.0.5",
+    "jsonwebtoken": "^9.0.3",
+    "multer": "^1.4.5-lts.1",
+    "node-schedule": "^2.1.1",
+    "nodemailer": "^8.0.4",
+    "openai": "^6.33.0",
+    "prisma": "^5.22.0",
+    "web-push": "^3.6.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}

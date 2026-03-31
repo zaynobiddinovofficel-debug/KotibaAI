@@ -1,0 +1,13 @@
+import React from 'react'
+imp
+export default function App() {
+  return (
+    <>
+
+    <div className='w-full max-w-[1440px] py-3 px-2'>
+      
+    </div>
+
+    </>
+  )
+}

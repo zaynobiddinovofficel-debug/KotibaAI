@@ -1,0 +1,134 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  phone     String   @unique
+  pinHash   String?  @map("pin_hash")
+  isFirstLogin Boolean @default(true) @map("is_first_login")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  reminders    Reminder[]
+  finances     Finance[]
+  categories   Category[]
+  tasks        Task[]
+  clients      Client[]
+  aiMessages   AiMessage[]
+  otpCodes     OtpCode[]
+
+  @@map("users")
+}
+
+model OtpCode {
+  id        String   @id @default(uuid())
+  userId    String?  @map("user_id")
+  phone     String
+  code      String
+  expiresAt DateTime @map("expires_at")
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("otp_codes")
+}
+
+model Reminder {
+  id               String   @id @default(uuid())
+  userId           String   @map("user_id")
+  text             String
+  date             DateTime
+  time             String
+  repeatType       String   @default("once") @map("repeat_type")
+  notificationType String   @default("push") @map("notification_type")
+  status           String   @default("active")
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("reminders")
+}
+
+model Finance {
+  id         String   @id @default(uuid())
+  userId     String   @map("user_id")
+  type       String
+  amount     Float
+  currency   String   @default("UZS")
+  categoryId String?  @map("category_id")
+  note       String?
+  date       DateTime @default(now())
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category Category? @relation(fields: [categoryId], references: [id])
+
+  @@map("finances")
+}
+
+model Category {
+  id        String   @id @default(uuid())
+  userId    String?  @map("user_id")
+  name      String
+  type      String
+  icon      String?
+  isDefault Boolean  @default(false) @map("is_default")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user     User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  finances Finance[]
+
+  @@map("categories")
+}
+
+model Task {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  text      String
+  deadline  DateTime?
+  status    String   @default("pending")
+  priority  String   @default("normal")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("tasks")
+}
+
+model Client {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  name      String
+  phone     String?
+  note      String?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("clients")
+}
+
+model AiMessage {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  role      String
+  content   String
+  type      String?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("ai_messages")
+}
