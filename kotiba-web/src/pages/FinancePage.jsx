@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { Plus, Pencil, Trash2, TrendingUp, TrendingDown, DollarSign } from 'lucide-react'
-import Layout from '../components/Layout.jsx'
-import Modal from '../components/ui/Modal.jsx'
-import Button from '../components/ui/Button.jsx'
-import Input from '../components/ui/Input.jsx'
-import Card from '../components/ui/Card.jsx'
+import { Layout } from '../components/Layout.jsx'
+import { Modal } from '../components/ui/Modal.jsx'
+import { Button } from '../components/ui/Button.jsx'
+import { Input } from '../components/ui/Input.jsx'
+import { Card } from '../components/ui/Card.jsx'
 import { financeAPI } from '../services/api.js'
 
 const CURRENCIES = ['UZS', 'USD', 'EUR', 'RUB']
